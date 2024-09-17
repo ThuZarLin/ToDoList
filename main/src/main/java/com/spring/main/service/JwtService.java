@@ -9,6 +9,8 @@ import java.util.HashMap;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.spring.main.repository.TokenRepository;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -16,6 +18,8 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtService {
+
+    private TokenRepository tokenRepository;
 
     private static final String SECRET_KEY = "V6/RpCdYrJWkj87dnqz+ekvomWvtYwuI7e7FRCGXq+4cMX0VgPrc7ROJ4nVAJAxV";
 
@@ -56,7 +60,11 @@ public class JwtService {
 
     public boolean isTokenValid(String token, UserDetails userDetails){
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+
+        boolean isValidToken = tokenRepository.findByToken(token)
+                                .map(t->!t.isLoggedOut())
+                                .orElse(false);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token) && isValidToken;
     }
 
     private boolean isTokenExpired(String token) {

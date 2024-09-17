@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 // import jakarta.persistence.PrePersist;
 // import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -62,7 +63,12 @@ public class User implements UserDetails{
     @UpdateTimestamp
     private Date updatedAt;
 
-    private Date email_verified_at;
+    private Date emailVerifiedAt;
+
+    private String randomCode;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     // @Temporal(TemporalType.TIMESTAMP)
     // private Date createdAt;
