@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -67,8 +68,11 @@ public class User implements UserDetails{
 
     private String randomCode;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Token> tokens;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Note> notes;
 
     // @Temporal(TemporalType.TIMESTAMP)
     // private Date createdAt;

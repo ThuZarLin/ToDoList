@@ -2,6 +2,7 @@ package com.spring.main.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.main.form.AuthenticationResponse;
 import com.spring.main.form.LoginForm;
 import com.spring.main.form.RegistrationForm;
 import com.spring.main.service.AuthenticationService;

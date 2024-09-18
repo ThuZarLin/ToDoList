@@ -1,4 +1,4 @@
-package com.spring.main.controller;
+package com.spring.main.form;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

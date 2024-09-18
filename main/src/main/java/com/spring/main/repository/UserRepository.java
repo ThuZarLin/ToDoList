@@ -9,4 +9,6 @@ import com.spring.main.enitity.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
     Optional<User> findByEmail(String email);
+
+    User findUserById(Long userId);
 }

@@ -8,9 +8,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.spring.main.controller.AuthenticationResponse;
 import com.spring.main.enitity.Token;
 import com.spring.main.enitity.User;
+import com.spring.main.form.AuthenticationResponse;
 import com.spring.main.form.LoginForm;
 import com.spring.main.form.RegistrationForm;
 import com.spring.main.repository.TokenRepository;
