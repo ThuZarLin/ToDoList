@@ -18,10 +18,12 @@ List<Note> findAllNoteByUser(User user);
 @Query("SELECT n FROM Note n INNER JOIN User u ON n.user.id = u.id WHERE n.user.id = :userId ORDER BY n.createdAt DESC")
 List<Note> findAllNoteByUserIdOrderedByDateDesc(@Param("userId") Long userId);
 
-// @Query("SELECT n FROM Note n INNER JOIN User u ON n.user.id = u.id WHERE n.user.id = :userId ORDER BY CASE n.priority WHEN 'LOW' THEN 1 WHEN 'MEDIUM' THEN 2 WHEN 'HIGH' THEN 3 END DESC")
-// List<Note> findAllNoteByUserIdOrderedByPriorityDesc(@Param("userId") Long userId);
 
 @Query("SELECT n FROM Note n INNER JOIN User u ON n.user.id = u.id WHERE n.user.id = :userId ORDER BY n.priority ASC")
 List<Note> findAllNoteByUserIdOrderedByPriorityDesc(@Param("userId") Long userId);
+
+
+@Query("SELECT DISTINCT n FROM Note n LEFT JOIN n.user u WHERE (LOWER(n.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(n.description) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND u.id = :userId ORDER BY n.priority ASC")
+List<Note> searchByKeyword(@Param("keyword") String keyword, @Param("userId") Long userId);
 
 }

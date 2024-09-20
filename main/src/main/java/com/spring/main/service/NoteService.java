@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.main.enitity.Note;
-import com.spring.main.enitity.Priority;
 import com.spring.main.enitity.User;
 import com.spring.main.repository.NoteRepository;
 
@@ -62,6 +61,10 @@ public class NoteService {
 
     public List<Note> findNoteByUserInPriorityDescOrder(Long userId) {
         return noteRepository.findAllNoteByUserIdOrderedByPriorityDesc(userId);
+    }
+
+    public List<Note> searchByKeyword(String keyword, Long userId) {
+        return noteRepository.searchByKeyword(keyword, userId);    
     }
 
 

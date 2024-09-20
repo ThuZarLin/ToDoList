@@ -13,12 +13,14 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -68,18 +70,26 @@ public class NoteController {
     //retrieve all notes by user in date descending order
     @GetMapping("/{userId}/notesDescInDate")
     public ResponseEntity<List<Note>> retrieveAllNotesInDateDescOrder(@PathVariable Long userId) {
-        User user = userRepository.findUserById(userId);
-        List<Note> notes = noteService.findNoteByUserInDateDescOrder(user.getId());
+        // User user = userRepository.findUserById(userId);
+        // List<Note> notes = noteService.findNoteByUserInDateDescOrder(user.getId());
+        List<Note> notes = noteService.findNoteByUserInDateDescOrder(userId);
+
         return new ResponseEntity<>(notes,HttpStatus.OK);
     }
 
     //retrieve all notes by user in priority descending order
     @GetMapping("/{userId}/notesDescInPriority")
     public ResponseEntity<List<Note>> retrieveAllNotesInPriorityDescOrder(@PathVariable Long userId) {
-        User user = userRepository.findUserById(userId);
-        List<Note> notes = noteService.findNoteByUserInPriorityDescOrder(user.getId());
+        // User user = userRepository.findUserById(userId);
+        List<Note> notes = noteService.findNoteByUserInPriorityDescOrder(userId);
         return new ResponseEntity<>(notes,HttpStatus.OK);
     }
     
 
+    @GetMapping("/{userId}/searchNotes")
+    public ResponseEntity<List<Note>> searchNotesByTitleOrDescription(@RequestParam String keyword, @PathVariable Long userId) {
+        // User user = userRepository.findUserById(userId);
+        List<Note> notes = noteService.searchByKeyword(keyword, userId);
+        return new ResponseEntity<>(notes,HttpStatus.OK);
+    }
 }

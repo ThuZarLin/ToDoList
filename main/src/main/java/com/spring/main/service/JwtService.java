@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 
+    @Autowired
     private TokenRepository tokenRepository;
 
     private static final String SECRET_KEY = "V6/RpCdYrJWkj87dnqz+ekvomWvtYwuI7e7FRCGXq+4cMX0VgPrc7ROJ4nVAJAxV";
@@ -53,7 +55,7 @@ public class JwtService {
             .claims(extraClaims)
             .subject(userDetails.getUsername())
             .issuedAt(new Date(System.currentTimeMillis()))
-            .expiration(new Date(System.currentTimeMillis() + 1000 * 60 *24))
+            .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 *24))
             .signWith(getSignInKey(), Jwts.SIG.HS256)
             .compact();
     }
