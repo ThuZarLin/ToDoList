@@ -19,13 +19,22 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final CustomLogoutHandler customLogoutHandler;
+
+    private static final String[] White_List_urls = {
+        "/api/register",
+        "/api/login",
+        "/api/verify",
+        "/api/resend",
+        "/api/forgetPassword",
+        "/api/resetPassword"
+    };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(
                 auth -> auth    
-                        .requestMatchers("/api/register", "/api/login", "/api/verify", "api/resend").permitAll()
+                        .requestMatchers(White_List_urls).permitAll()
                         .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
