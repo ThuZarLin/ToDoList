@@ -18,7 +18,7 @@ public class UserNameEditForm {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @Email
-    @NotBlank
+    @Email(message = "email's format is wrong")
+    @NotBlank(message = "email is required")
     private String email;
 }

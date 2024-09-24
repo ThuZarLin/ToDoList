@@ -27,6 +27,5 @@ public class RegistrationForm {
     @Size(min = 8, message = "Password should have min 8 characters")
     private String password;
 
-    // @NotEmpty(message = "Profile Path is required")
-    // private String profilePath;
+    private String profilePath;
 }

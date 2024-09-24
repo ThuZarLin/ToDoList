@@ -15,6 +15,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 // import jakarta.persistence.PrePersist;
 // import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -57,6 +58,13 @@ public class User implements UserDetails{
     private String password;
 
     private String profilePath;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.profilePath == null) {
+            this.profilePath = "/user/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg";
+        }
+    }
 
     @CreationTimestamp
     private Date createdAt;

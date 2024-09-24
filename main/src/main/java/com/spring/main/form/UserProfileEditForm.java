@@ -1,5 +1,7 @@
 package com.spring.main.form;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,6 @@ public class UserProfileEditForm {
     @NotBlank(message = "Email is required")
     private String email;
 
-    @NotBlank(message = "Profile path is required")
-    private String profilePath;
+    
+    private MultipartFile profilePath;
 }

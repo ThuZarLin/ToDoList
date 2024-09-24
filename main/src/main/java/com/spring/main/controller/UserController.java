@@ -4,9 +4,12 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.spring.main.enitity.User;
 import com.spring.main.form.AuthenticationResponse;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
+@RestControllerAdvice
 @RequiredArgsConstructor
 @RequestMapping("/api/")
 public class UserController {
@@ -81,7 +85,7 @@ public class UserController {
     }
 
     @PutMapping("/editUserProfile")
-    public ResponseEntity<String> editUserProfile(@Valid @RequestBody UserProfileEditForm request) {
+    public ResponseEntity<String> editUserProfile(@Valid @ModelAttribute UserProfileEditForm request) {
         userService.editUserProfile(request);
         return ResponseEntity.ok("Profile path updateed completed");
     }

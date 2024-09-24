@@ -33,6 +33,9 @@ public class UserService {
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private FileUploadService fileUploadService;
+
     public void saveUserToken(String jwtToken, User user){
         Token token = Token.builder()
             .token(jwtToken)
@@ -48,11 +51,11 @@ public class UserService {
         User user = userRepository.findByEmail(request.getEmail())
             .orElseThrow(() -> new IllegalStateException("User not found"));
 
-        if(!user.getRandomCode().equals(request.getRandomCode())){
-            throw new IllegalArgumentException("Invalid random code");
-        }
-        if(!request.getPassword().equals(request.getConfirmPassword())){
-            throw new IllegalArgumentException("Password doesn't match");
+        // if(!user.getRandomCode().equals(request.getRandomCode())){
+        //     throw new IllegalArgumentException("Invalid random code");
+        // }
+        if(!user.getRandomCode().equals(request.getRandomCode()) && !request.getPassword().equals(request.getConfirmPassword())){
+            throw new IllegalArgumentException("Invalid random code or Password doesn't match");
         }
         user.setPassword(passwordEncoder.encode(request.getPassword()));
                 userRepository.save(user);
@@ -90,7 +93,8 @@ public class UserService {
         User user = userRepository.findByEmail(request.getEmail())
             .orElseThrow(() -> new IllegalStateException("User not found"));
 
-        user.setFirstName(request.getProfilePath());
+        String filePath = fileUploadService.uploadImage(request.getProfilePath(), "user");
+        user.setProfilePath(filePath);
 
         userRepository.save(user);
         return "Profile path updated successfully";

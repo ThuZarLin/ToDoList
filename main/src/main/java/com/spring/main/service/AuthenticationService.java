@@ -53,7 +53,7 @@ public class AuthenticationService {
             .lastName(request.getLastName())
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
-            .profilePath("No profile to show")
+            .profilePath(request.getProfilePath())
             .randomCode(randomCode)
             .build();
 
